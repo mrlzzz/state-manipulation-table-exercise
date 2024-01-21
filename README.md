@@ -1,1 +1,1 @@
-# [REACT] State manipulation exercise
+# State manipulation exercise

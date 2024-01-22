@@ -1,29 +1,24 @@
 import { useState } from "react";
 import TableRow from "./TableRow";
-import DogBreedType from "../types/DogBreedType";
+import { DogBreedType, SortOrder, SortOrderType } from "../types/DogBreedType";
 import TableHeader from "./TableHeader";
 
-enum SortOrder {
-    ASC = "asc",
-    DESC = "desc",
-}
-
-type SortOrderType = {
-    id: SortOrder;
-    name: SortOrder;
-    avgWeight: SortOrder;
-    avgHeight: SortOrder;
-    avgLifespan: SortOrder;
-    isActive: SortOrder;
+const defaultSortOrder: SortOrderType = {
+    id: SortOrder.DEFAULT,
+    name: SortOrder.DEFAULT,
+    avgWeight: SortOrder.DEFAULT,
+    avgHeight: SortOrder.DEFAULT,
+    avgLifespan: SortOrder.DEFAULT,
+    isActive: SortOrder.DEFAULT,
 };
 
 const createInitialSortOrder = (): SortOrderType => ({
     id: SortOrder.ASC,
-    name: SortOrder.ASC,
-    avgWeight: SortOrder.ASC,
-    avgHeight: SortOrder.ASC,
-    avgLifespan: SortOrder.ASC,
-    isActive: SortOrder.ASC,
+    name: SortOrder.DEFAULT,
+    avgWeight: SortOrder.DEFAULT,
+    avgHeight: SortOrder.DEFAULT,
+    avgLifespan: SortOrder.DEFAULT,
+    isActive: SortOrder.DEFAULT,
 });
 
 type TableProps = {
@@ -60,7 +55,7 @@ const Table = ({ title, data, setData }: TableProps) => {
             setData(sortedData);
 
             setSortOrder({
-                ...sortOrder,
+                ...defaultSortOrder,
                 [property]:
                     sortOrder[property] === SortOrder.ASC
                         ? SortOrder.DESC
@@ -80,6 +75,7 @@ const Table = ({ title, data, setData }: TableProps) => {
                             <TableHeader
                                 headers={Object.keys(data[0])}
                                 sortData={sortData}
+                                sortOrder={sortOrder}
                             />
                         ) : (
                             <tr>

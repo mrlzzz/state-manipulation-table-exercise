@@ -1,4 +1,4 @@
-type DogBreedType = {
+export type DogBreedType = {
     id: number;
     name: string;
     avgWeight: number;
@@ -7,4 +7,17 @@ type DogBreedType = {
     isActive: boolean;
 };
 
-export default DogBreedType;
+export enum SortOrder {
+    ASC = "asc",
+    DESC = "desc",
+    DEFAULT = "default",
+}
+
+export type SortOrderType = {
+    id: SortOrder;
+    name: SortOrder;
+    avgWeight: SortOrder;
+    avgHeight: SortOrder;
+    avgLifespan: SortOrder;
+    isActive: SortOrder;
+};

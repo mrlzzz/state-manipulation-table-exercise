@@ -1,4 +1,4 @@
-import DogBreedType from "../types/DogBreedType";
+import { DogBreedType } from "../types/DogBreedType";
 
 type TableRowProps = {
     rowData: DogBreedType;

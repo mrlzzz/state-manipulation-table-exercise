@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Table from "./components/Table";
-import DogBreedType from "./types/DogBreedType";
+import { DogBreedType } from "./types/DogBreedType";
 
 const endpointUrl = "https://data.webdevinterviews.com/dogBreeds.json";
 

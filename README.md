@@ -13,4 +13,3 @@ Practice on:
     -   Lifting state up
     -   Prop "drilling"
     -   Sorting table data
-        -   I'm sorting the whole dataset, thus sorting and pagination do not make sense together

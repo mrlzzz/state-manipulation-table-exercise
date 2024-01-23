@@ -2,6 +2,7 @@ import { useState } from "react";
 import TableRow from "./TableRow";
 import { DogBreedType, SortOrder, SortOrderType } from "../types/DogBreedType";
 import TableHeader from "./TableHeader";
+import TablePagination from "./TablePagination";
 
 const defaultSortOrder: SortOrderType = {
     id: SortOrder.DEFAULT,
@@ -25,9 +26,22 @@ type TableProps = {
     title: string;
     data: DogBreedType[] | null;
     setData: React.Dispatch<React.SetStateAction<DogBreedType[] | null>>;
+    itemsPerPage: number;
 };
 
-const Table = ({ title, data, setData }: TableProps) => {
+const Table = ({ title, data, setData, itemsPerPage }: TableProps) => {
+    // Pagination
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil((data?.length ?? 0) / itemsPerPage);
+
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // Sorting
     const [sortOrder, setSortOrder] = useState<SortOrderType>(
         createInitialSortOrder()
     );
@@ -52,6 +66,7 @@ const Table = ({ title, data, setData }: TableProps) => {
                     }
                 }
             });
+
             setData(sortedData);
 
             setSortOrder({
@@ -65,8 +80,7 @@ const Table = ({ title, data, setData }: TableProps) => {
     };
 
     return (
-        <div className="flex">
-            <div className="flex flex-col p-10 gap-2"></div>
+        <div className="">
             <div className="p-10 border border-black/50">
                 <h1 className="font-bold text-2xl my-3">{title}</h1>
                 <table className="table-auto">
@@ -84,11 +98,16 @@ const Table = ({ title, data, setData }: TableProps) => {
                         )}
                     </thead>
                     <tbody>
-                        {data?.map((dog, idx) => (
+                        {currentItems?.map((dog, idx) => (
                             <TableRow key={idx} rowData={dog} />
                         ))}
                     </tbody>
                 </table>
+                <TablePagination
+                    handlePageChange={handlePageChange}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                />
             </div>
         </div>
     );
